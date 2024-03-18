@@ -46,7 +46,7 @@ int main() {
     curr_time = time(NULL);
 
     char* time_str = ctime(&curr_time);
-    time_str[24] = '\0'; // Remove newline at the end of the time string
+    time_str[24] = '\0';
 
     fprintf(file, "======== lotto649 =========\n=%s=\n", time_str);
 
