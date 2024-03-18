@@ -24,7 +24,7 @@ void fill_remaining(int remaining, FILE *file, int* used, int start) {
     for (int i = start; i < start + remaining; i++) {
         fprintf(file, "[%d]: ", i);
         for (int j = 0; j < 7; j++) {
-            fprintf(file, "__ ");
+            fprintf(file, "-- ");
         }
         fprintf(file, "\n");
     }
@@ -48,8 +48,9 @@ int main() {
     char* time_str = ctime(&curr_time);
     time_str[24] = '\0'; // Remove newline at the end of the time string
 
-    fprintf(file, "========= lotto649 =========\n");
+    fprintf(file, "======== lotto649 =========\n=%s=\n", time_str);
 
+    srand(time(NULL));
 
     int used_nums[7];
 
@@ -70,7 +71,7 @@ int main() {
         fill_remaining(remaining_tickets, file, used_nums, ticket_count + 1);
     }
 
-    fprintf(file, "========= csie@CGU =========\n");
+    fprintf(file, "======== csie@CGU =========\n");
 
     fclose(file);
 
