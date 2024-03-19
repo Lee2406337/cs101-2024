@@ -55,7 +55,7 @@ int main() {
     int used_nums[7];
 
     int i;
-    int ticket_count = 0;
+    int ticket = 0;
     for (i = 0; i < num; i++) {
         ticket_count++;
         fprintf(file, "[%d]: ", ticket_count);
