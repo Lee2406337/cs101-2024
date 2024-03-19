@@ -57,8 +57,8 @@ int main() {
     int i;
     int ticket = 0;
     for (i = 0; i < num; i++) {
-        ticket_count++;
-        fprintf(file, "[%d]: ", ticket_count);
+        ticket++;
+        fprintf(file, "[%d]: ", ticket);
         for (int j = 0; j < 7; j++) {
             int random_num = unique_random(1, 69, used_nums, j);
             fprintf(file, "%02d ", random_num);
@@ -66,9 +66,9 @@ int main() {
         fprintf(file, "\n");
     }
 
-    int remaining_tickets = 5 - ticket_count;
+    int remaining_tickets = 5 - ticket;
     if (remaining_tickets > 0) {
-        fill_remaining(remaining_tickets, file, used_nums, ticket_count + 1);
+        fill_remaining(remaining_tickets, file, used_nums, ticket + 1);
     }
 
     fprintf(file, "======== csie@CGU =========\n");
