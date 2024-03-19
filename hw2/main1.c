@@ -32,7 +32,7 @@ void fill_remaining(int remaining, FILE *file, int* used, int start) {
 
 int main() {
     int num;
-    printf("歡迎光臨長庚樂透彩卷購買機台\n請問您要買幾組樂透彩:");
+    printf("歡迎光臨長庚樂透彩購買機台\n請問您要買幾組樂透彩:");
     scanf("%d", &num);
     printf("以為您購買的%d組樂透組合輸出至 lotto.txt\n", num);
 
