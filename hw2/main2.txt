@@ -1,28 +1,26 @@
 #include <stdio.h>
 
 int main() {
-    FILE *file, *outputFile;
-    char filename[] = __FILE__;
-    char c;
+    FILE *inputFile, *outputFile;
+    char line[1000];
 
-    file = fopen(filename, "r");
-    if (file == NULL) {
-        printf("无法打开文件 %s.\n", filename);
+    inputFile = fopen("main2.c", "r");
+
+    if (inputFile == NULL) {
         return 1;
     }
 
     outputFile = fopen("main2.txt", "w");
+
     if (outputFile == NULL) {
-        printf("无法创建输出文件.\n");
         return 1;
     }
 
-    while ((c = fgetc(file)) != EOF) {
-        printf("%c", c);
-        fputc(c, outputFile);
+    while (fgets(line, sizeof(line), inputFile) != NULL) {
+        fputs(line, outputFile);
     }
 
-    fclose(file);
+    fclose(inputFile);
     fclose(outputFile);
 
     return 0;
