@@ -1,79 +1,75 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
-int unique_random(int min, int max, int* used, int count) {
-    int num;
-    do {
-        num = rand() % (max - min + 1) + min;
-        int unique = 1;
-        for (int i = 0; i < count; i++) {
-            if (num == used[i]) {
-                unique = 0;
-                break;
-            }
-        }
-        if (unique) {
-            used[count] = num;
-            return num;
-        }
-    } while (1);
-}
-
-void fill_remaining(int remaining, FILE *file, int* used, int start) {
-    for (int i = start; i < start + remaining; i++) {
-        fprintf(file, "[%d]: ", i);
-        for (int j = 0; j < 7; j++) {
-            fprintf(file, "-- ");
-        }
-        fprintf(file, "\n");
-    }
-}
-
-int main() {
-    int num;
-    printf("歡迎光臨長庚樂透彩購買機台\n請問您要買幾組樂透彩:");
-    scanf("%d", &num);
-    printf("以為您購買的%d組樂透組合輸出至 lotto.txt\n", num);
-
-    FILE *file = fopen("lotto.txt", "w");
-    if (file == NULL) {
-        printf("無法打開文件");
-        return 1;
-    }
-
-    time_t curr_time;
-    curr_time = time(NULL);
-
-    char* time_str = ctime(&curr_time);
-    time_str[24] = '\0';
-
-    fprintf(file, "======== lotto649 =========\n=%s=\n", time_str);
-
-    srand(time(NULL));
-
-    int used_nums[7];
-
-    int i;
-    int ticket = 0;
-    for (i = 0; i < num; i++) {
-        ticket++;
-        fprintf(file, "[%d]: ", ticket);
-        for (int j = 0; j < 7; j++) {
-            int random_num = unique_random(1, 69, used_nums, j);
-            fprintf(file, "%02d ", random_num);
-        }
-        fprintf(file, "\n");
-    }
-
-    int remaining_tickets = 5 - ticket;
-    if (remaining_tickets > 0) {
-        fill_remaining(remaining_tickets, file, used_nums, ticket + 1);
-    }
-
-    fprintf(file, "======== csie@CGU =========\n");
-
-    fclose(file);
-
-    return 0;
+#include <stdio.h> 
+#include <stdlib.h> 
+ 
+void arrayRand(int[5][7], int); 
+void out2Txt(int[5][7]); 
+ 
+ 
+int main(){ 
+ 
+    int input; 
+    int target[5][7] = {0}; 
+ 
+    scanf( "%d", &input); 
+ 
+    arrayRand(target, input); 
+    out2Txt(target); 
+ 
+    return 0; 
+ 
+    } 
+ 
+ 
+void arrayRand(int v[5][7], int k){ 
+ 
+    int myRow; 
+    int myColumn; 
+    int idx; 
+ 
+    srand(1); 
+ 
+    for ( myRow=0 ; myRow<k ; myRow++ ){ 
+        for ( myColumn=0 ; myColumn<7 ; myColumn++ ){ 
+            v[myRow][myColumn] = rand()%69+1; 
+ 
+            for ( idx=myColumn-1 ; idx>=0 ; idx--){ 
+                if ( v[myRow][idx] == v[myRow][myColumn] ){ 
+                    idx=-1; 
+                    myColumn--; 
+                } 
+            } 
+        } 
+    } 
+ 
+ 
+} 
+ 
+ 
+void out2Txt(int out[5][7]){ 
+ 
+    int x; 
+    int y; 
+ 
+    FILE *fptr; 
+    fptr = fopen("lotto.txt","w"); 
+ 
+    fprintf(fptr,"========= lotto649 =========\n"); 
+ 
+    for ( x=0 ; x<5 ;x++){ 
+        fprintf(fptr,"[%1d]:",x+1); 
+ 
+        for ( y=0 ; y<7 ; y++){ 
+            if ( out[x][y] > 0 ){ 
+                fprintf(fptr," %02d",out[x][y]); 
+            } 
+            else{ 
+                fprintf(fptr," __"); 
+            } 
+        } 
+ 
+        fprintf(fptr,"\n"); 
+    } 
+    fprintf(fptr,"========= csie@CGU =========\n"); 
+    fclose(fptr); 
+ 
 }
