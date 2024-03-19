@@ -1,22 +1,40 @@
 #include <stdio.h>
+#include <string.h>
 
 int main() {
-    FILE *fp = fopen(__FILE__, "r");
-    if (fp == NULL) {
-        printf("無法打開文件");
+    FILE *inputFile, *outputFile;
+    char line[1000];
+    int lineNumber = 0;
+    int found = 0;
+
+    inputFile = fopen("main3.c", "r");
+
+    if (inputFile == NULL) {
         return 1;
     }
 
-    char line[100];
-    int line_num = 0;
-    while (fgets(line, sizeof(line), fp)) {
-        line_num++;
-        if (strstr(line, "int main()")) {
-            printf("%d\n", line_num);
+    outputFile = fopen("main3.txt", "w");
+
+    if (outputFile == NULL) {
+        return 1;
+    }
+
+    while (fgets(line, sizeof(line), inputFile) != NULL) {
+        lineNumber++;
+
+        if (strstr(line, "int main()") != NULL) {
+            fprintf(outputFile, "%d\n", lineNumber);
+            found = 1;
             break;
         }
     }
 
-    fclose(fp);
+    if (!found) {
+        fprintf(outputFile, "%d\n", -1);
+    }
+
+    fclose(inputFile);
+    fclose(outputFile);
+
     return 0;
 }
