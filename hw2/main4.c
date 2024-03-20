@@ -6,8 +6,23 @@ typedef struct Books {
     char title[100];
 } book_t;
 
-void total_price(book_t books[], int num_books);
-void list_books(book_t books[], int num_books, int id);
+void total_price(book_t books[], int num_books) {
+    int total = 0;
+    for (int i = 0; i < num_books; ++i) {
+        total += books[i].price;
+    }
+    printf("%d", total);
+}
+
+void list_books(book_t books[], int num_books, int id) {
+    for (int i = 0; i < num_books; ++i) {
+        if (books[i].id == id) {
+            printf("%d ", books[i].price);
+            printf("%s", books[i].title);
+            return;
+        }
+    }
+}
 
 int main() {
     book_t books[] = {
@@ -32,22 +47,4 @@ int main() {
     }
 
     return 0;
-}
-
-void total_price(book_t books[], int num_books) {
-    int total = 0;
-    for (int i = 0; i < num_books; ++i) {
-        total += books[i].price;
-    }
-    printf("%d", total);
-}
-
-void list_books(book_t books[], int num_books, int id) {
-    for (int i = 0; i < num_books; ++i) {
-        if (books[i].id == id) {
-            printf("%d ", books[i].price);
-            printf("%s", books[i].title);
-            return;
-        }
-    }
 }
